@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="hedgehog.tech.multithreadingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,6 +24,7 @@
 
         <activity android:name=".LvL0"/>
         <activity android:name=".LvL1"/>
+        <activity android:name=".LvL2"/>
 
 
     </application>

@@ -32,10 +32,10 @@
         app:layout_constraintTop_toBottomOf="@+id/text_status" />
 
     <Button
-        android:id="@+id/button_double"
+        android:id="@+id/button_join"
         style="@style/button_style"
         android:layout_marginBottom="16dp"
-        android:text="Start double coroutines"
+        android:text="join job"
         app:layout_constraintBottom_toBottomOf="@id/button_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
@@ -43,7 +43,7 @@
     <Button
         android:id="@+id/button_start"
         style="@style/button_style"
-        android:text="START"
+        android:text="START job"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

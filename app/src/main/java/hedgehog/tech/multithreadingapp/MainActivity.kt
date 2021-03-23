@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LvL1::class.java))
         }
 
+        binding.button2.setOnClickListener {
+            startActivity(Intent(this, LvL2::class.java))
+        }
+
     }
 
 }

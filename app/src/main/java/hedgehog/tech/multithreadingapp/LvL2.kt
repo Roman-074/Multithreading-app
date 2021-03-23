@@ -1,6 +1,7 @@
 package hedgehog.tech.multithreadingapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import hedgehog.tech.multithreadingapp.databinding.Activity2Binding
 import kotlinx.coroutines.*
@@ -24,16 +25,16 @@ class LvL2: AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = Activity2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        // привязываем работу данной джобы к жизненному циклу активити
+        job = Job()
         binding.buttonStart.setOnClickListener {
             launchScope()
         }
-
-        job = Job()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        // не забываем отменять работу джлбы при завершении работы с активити
         job.cancel()
     }
 
@@ -45,40 +46,31 @@ class LvL2: AppCompatActivity(), CoroutineScope {
 
     // Deferred<T> возвращает конкретное значение типа T после того, как сопрограмма завершает
     // выполнение, тогда как в Job этого не происходит
-
     // еще пример: launch больше похож на построитель сопрограмм типа «запустил и забыл»,
     // в то время как async возвращает значение после того, как сопрограмма завершила выполнение
+
+    // (launch доступен тут потому, что мы унаследовали активити от CoroutineScope)
     fun launchScope() = launch {
         val deferred: Deferred<String> = async(context = ioContext) {
             longTask()
         }
         // ожидает завершения сопрограммы и возвращает результат
         val resultString: String = deferred.await()
+        Log.d("my", "async fun $resultString ")
+        // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
+        withContext(context = coroutineContext){
+            binding.textStatus.text = "Async fun заверишла работу и вернула значение"
+        }
     }
 
-
-    // join() нужна, чтобы приостановить сопрограмму, пока она не завершит выполнение
-    suspend fun waitForAllCoroutinesToFinish() = job.join()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private fun longTask(): String{
+    // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
+    private suspend fun longTask(): String{
         println("Click!")
         for (i in 0..7){
             downloadFile(i)
-            binding.textStatus.text = "Закачано файлов: $i"
+            withContext(context = coroutineContext){
+                binding.textStatus.text = "Закачано файлов: $i"
+            }
         }
         return "Success!"
     }
@@ -91,8 +83,5 @@ class LvL2: AppCompatActivity(), CoroutineScope {
             ex.printStackTrace()
         }
     }
-
-
-
 
 }
