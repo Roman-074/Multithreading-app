@@ -38,6 +38,13 @@
                 android:text="LvL 2"
                 style="@style/button_style" />
 
+            <Button
+                android:id="@+id/button_rx"
+                android:layout_marginTop="50dp"
+                android:text="RX JAVA"
+                style="@style/button_style"
+                />
+
         </LinearLayout>
     </ScrollView>
 

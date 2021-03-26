@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LvL2::class.java))
         }
 
+        binding.buttonRx.setOnClickListener {
+            startActivity(Intent(this, RxJava::class.java))
+        }
+
     }
 
 }

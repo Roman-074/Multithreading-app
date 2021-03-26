@@ -56,6 +56,8 @@ class LvL2: AppCompatActivity(), CoroutineScope {
         }
         // ожидает завершения сопрограммы и возвращает результат
         val resultString: String = deferred.await()
+
+
         Log.d("my", "async fun $resultString ")
         // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
         withContext(context = coroutineContext){
@@ -83,5 +85,21 @@ class LvL2: AppCompatActivity(), CoroutineScope {
             ex.printStackTrace()
         }
     }
+
+
+
+
+//    private fun doWorksInParallel() {
+//        val one = async(CommonPool) {
+//            doWorkFor1Seconds()
+//        }
+//        val two = async(CommonPool) {
+//            doWorkFor2Seconds()
+//        }
+//        launch(CommonPool) {
+//            val combined = one.await() + "_" + two.await()
+//            println("Kotlin Combined : " + combined)
+//        }
+//    }
 
 }
