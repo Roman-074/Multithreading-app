@@ -30,6 +30,8 @@ class LvL2: AppCompatActivity(), CoroutineScope {
         binding.buttonStart.setOnClickListener {
             launchScope()
         }
+
+
     }
 
     override fun onDestroy() {
@@ -50,13 +52,12 @@ class LvL2: AppCompatActivity(), CoroutineScope {
     // в то время как async возвращает значение после того, как сопрограмма завершила выполнение
 
     // (launch доступен тут потому, что мы унаследовали активити от CoroutineScope)
-    fun launchScope() = launch {
+    private fun launchScope() = launch {
         val deferred: Deferred<String> = async(context = ioContext) {
             longTask()
         }
         // ожидает завершения сопрограммы и возвращает результат
         val resultString: String = deferred.await()
-
 
         Log.d("my", "async fun $resultString ")
         // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
@@ -85,21 +86,5 @@ class LvL2: AppCompatActivity(), CoroutineScope {
             ex.printStackTrace()
         }
     }
-
-
-
-
-//    private fun doWorksInParallel() {
-//        val one = async(CommonPool) {
-//            doWorkFor1Seconds()
-//        }
-//        val two = async(CommonPool) {
-//            doWorkFor2Seconds()
-//        }
-//        launch(CommonPool) {
-//            val combined = one.await() + "_" + two.await()
-//            println("Kotlin Combined : " + combined)
-//        }
-//    }
 
 }

@@ -25,6 +25,9 @@
         <activity android:name=".LvL0"/>
         <activity android:name=".LvL1"/>
         <activity android:name=".LvL2"/>
+        <activity android:name=".LvL3"/>
+        <activity android:name=".LvL4"/>
+
         <activity android:name=".RxJava"/>
 
 

@@ -37,6 +37,14 @@
                 android:id="@+id/button_2"
                 android:text="LvL 2"
                 style="@style/button_style" />
+            <Button
+                android:id="@+id/button_3"
+                android:text="LvL 3"
+                style="@style/button_style" />
+            <Button
+                android:id="@+id/button_4"
+                android:text="LvL 4"
+                style="@style/button_style" />
 
             <Button
                 android:id="@+id/button_rx"

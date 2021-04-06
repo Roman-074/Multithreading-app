@@ -26,6 +26,7 @@ public class RxJava extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.buttonStart.setOnClickListener(v -> {
+
             downloadLogo()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -35,7 +36,6 @@ public class RxJava extends AppCompatActivity {
                         binding.textStatus.setText("Ошибка");
                     });
         });
-
 
     }
 
