@@ -3,6 +3,7 @@ package hedgehog.tech.multithreadingapp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.databinding.Activity1Binding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -10,23 +11,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
-class LvL1: AppCompatActivity() {
+class LvL1: AppCompatActivity(R.layout.activity_1) {
 
-    lateinit var binding: Activity1Binding
+    private val viewBinding by viewBinding(Activity1Binding::bind)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity1Binding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.buttonStart.setOnClickListener {
+        viewBinding.buttonStart.setOnClickListener {
             // при каждом клике создается отдельная корутина, которая работает изолированно от другой
             newLaunch()
         }
 
         // тут создается сразу две корутины, которые работают параллельно
-        binding.buttonDouble.setOnClickListener {
+        viewBinding.buttonDouble.setOnClickListener {
             newLaunch()
             newLaunch()
         }
@@ -43,10 +42,10 @@ class LvL1: AppCompatActivity() {
                     downloadFile(i)
                 }
                 withContext(Dispatchers.Main){
-                    binding.textStatus.text = "Закачано файлов: $i"
+                    viewBinding.textStatus.text = "Закачано файлов: $i"
                 }
             }
-            binding.textStatus.text = "Success!"
+            viewBinding.textStatus.text = "Success!"
         }
     }
 

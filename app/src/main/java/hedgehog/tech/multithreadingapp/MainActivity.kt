@@ -3,24 +3,37 @@ package hedgehog.tech.multithreadingapp
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var binding: ActivityMainBinding
+    private val viewBinding by viewBinding(ActivityMainBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.button0.setOnClickListener { startActivity(Intent(this, LvL0::class.java)) }
-        binding.button1.setOnClickListener { startActivity(Intent(this, LvL1::class.java)) }
-        binding.button2.setOnClickListener { startActivity(Intent(this, LvL2::class.java)) }
-        binding.button3.setOnClickListener { startActivity(Intent(this, LvL3::class.java)) }
-        binding.button4.setOnClickListener { startActivity(Intent(this, LvL4::class.java)) }
+        viewBinding.apply {
+            button0.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LvL0::class.java))
+            }
+            button1.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LvL1::class.java))
+            }
+            button2.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LvL2::class.java))
+            }
+            button3.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LvL3::class.java))
+            }
+            button4.setOnClickListener {
+                startActivity(Intent(this@MainActivity, LvL4::class.java))
+            }
+            buttonRx.setOnClickListener {
+                startActivity(Intent(this@MainActivity, RxJava::class.java))
+            }
+        }
 
-        binding.buttonRx.setOnClickListener { startActivity(Intent(this, RxJava::class.java)) }
 
     }
 

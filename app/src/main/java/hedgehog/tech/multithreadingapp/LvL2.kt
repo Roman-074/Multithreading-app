@@ -3,14 +3,16 @@ package hedgehog.tech.multithreadingapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
+import hedgehog.tech.multithreadingapp.databinding.Activity1Binding
 import hedgehog.tech.multithreadingapp.databinding.Activity2Binding
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
-class LvL2: AppCompatActivity(), CoroutineScope {
+class LvL2: AppCompatActivity(R.layout.activity_2), CoroutineScope {
 
-    lateinit var binding: Activity2Binding
+    private val viewBinding by viewBinding(Activity2Binding::bind)
 
     // переменная, связанная с жизненным циклом активити
     lateinit var job: Job
@@ -23,11 +25,9 @@ class LvL2: AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity2Binding.inflate(layoutInflater)
-        setContentView(binding.root)
         // привязываем работу данной джобы к жизненному циклу активити
         job = Job()
-        binding.buttonStart.setOnClickListener {
+        viewBinding.buttonStart.setOnClickListener {
             launchScope()
         }
 
@@ -62,7 +62,7 @@ class LvL2: AppCompatActivity(), CoroutineScope {
         Log.d("my", "async fun $resultString ")
         // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
         withContext(context = coroutineContext){
-            binding.textStatus.text = "Async fun заверишла работу и вернула значение"
+            viewBinding.textStatus.text = "Async fun заверишла работу и вернула значение"
         }
     }
 
@@ -72,7 +72,7 @@ class LvL2: AppCompatActivity(), CoroutineScope {
         for (i in 0..7){
             downloadFile(i)
             withContext(context = coroutineContext){
-                binding.textStatus.text = "Закачано файлов: $i"
+                viewBinding.textStatus.text = "Закачано файлов: $i"
             }
         }
         return "Success!"

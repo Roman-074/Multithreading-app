@@ -3,42 +3,42 @@ package hedgehog.tech.multithreadingapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
+import hedgehog.tech.multithreadingapp.databinding.Activity2Binding
 import hedgehog.tech.multithreadingapp.databinding.Activity3Binding
 import kotlinx.coroutines.*
 
-class LvL3: AppCompatActivity() {
+class LvL3: AppCompatActivity(R.layout.activity_3) {
 
-    lateinit var binding: Activity3Binding
+    private val viewBinding by viewBinding(Activity3Binding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity3Binding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.buttonJoin.setOnClickListener {
+        viewBinding.buttonJoin.setOnClickListener {
             runBlocking {
                 initJob().join()
                 Log.d("my", "Main block >>>")
-                binding.textStatus.text = "Main block >>>"
+                viewBinding.textStatus.text = "Main block >>>"
             }
         }
 
-        binding.buttonStart.setOnClickListener {
+        viewBinding.buttonStart.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main) {
                 initJob().join()
                 Log.d("my", "Background block >>>")
-                binding.textStatus.text = "Background block >>>"
+                viewBinding.textStatus.text = "Background block >>>"
             }
         }
 
 
-        binding.buttonCancel.setOnClickListener {
+        viewBinding.buttonCancel.setOnClickListener {
             val ex = initJob()
             runBlocking {
                 delay(3000)
                 ex.cancel()
                 Log.d("my", "Cancel >>>")
-                binding.textStatus.text = "Cancel >>>"
+                viewBinding.textStatus.text = "Cancel >>>"
             }
         }
 

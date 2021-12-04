@@ -3,33 +3,33 @@ package hedgehog.tech.multithreadingapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
+import hedgehog.tech.multithreadingapp.databinding.Activity3Binding
 import hedgehog.tech.multithreadingapp.databinding.Activity4Binding
 import kotlinx.coroutines.*
 
-class LvL4: AppCompatActivity() {
+class LvL4: AppCompatActivity(R.layout.activity_4) {
 
-    lateinit var binding: Activity4Binding
+    private val viewBinding by viewBinding(Activity4Binding::bind)
     lateinit var ex: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity4Binding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.buttonStartJob.setOnClickListener {
+        viewBinding.buttonStartJob.setOnClickListener {
             ex = initJob()
         }
 
-        binding.buttonCancel.setOnClickListener {
+        viewBinding.buttonCancel.setOnClickListener {
             runBlocking {
 //                delay(2000)
                 ex.cancel()
                 Log.d("my", "Cancel >>>")
-                binding.textStatus.text = "Cancel >>>"
+                viewBinding.textStatus.text = "Cancel >>>"
             }
         }
 
-        binding.buttonTimeout.setOnClickListener {
+        viewBinding.buttonTimeout.setOnClickListener {
             initJobTimeout()
         }
 
