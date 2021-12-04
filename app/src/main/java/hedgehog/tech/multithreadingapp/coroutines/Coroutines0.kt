@@ -1,14 +1,15 @@
-package hedgehog.tech.multithreadingapp
+package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
-import hedgehog.tech.multithreadingapp.databinding.Activity0Binding
+import hedgehog.tech.multithreadingapp.R
+import hedgehog.tech.multithreadingapp.databinding.Coroutines0Binding
 import java.util.concurrent.TimeUnit
 
-class LvL0 : AppCompatActivity(R.layout.activity_0) {
+class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
 
-    private val viewBinding by viewBinding(Activity0Binding::bind)
+    private val viewBinding by viewBinding(Coroutines0Binding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

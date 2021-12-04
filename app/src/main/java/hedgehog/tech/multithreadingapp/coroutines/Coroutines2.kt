@@ -1,18 +1,18 @@
-package hedgehog.tech.multithreadingapp
+package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
-import hedgehog.tech.multithreadingapp.databinding.Activity1Binding
-import hedgehog.tech.multithreadingapp.databinding.Activity2Binding
+import hedgehog.tech.multithreadingapp.R
+import hedgehog.tech.multithreadingapp.databinding.Coroutines2Binding
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
-class LvL2: AppCompatActivity(R.layout.activity_2), CoroutineScope {
+class Coroutines2: AppCompatActivity(R.layout.coroutines_2), CoroutineScope {
 
-    private val viewBinding by viewBinding(Activity2Binding::bind)
+    private val viewBinding by viewBinding(Coroutines2Binding::bind)
 
     // переменная, связанная с жизненным циклом активити
     lateinit var job: Job

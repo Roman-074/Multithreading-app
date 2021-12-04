@@ -1,4 +1,4 @@
-package hedgehog.tech.multithreadingapp
+package hedgehog.tech.multithreadingapp.main
 
 import org.json.JSONObject
 import java.io.*

@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Multithreadingapp">
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +23,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LvL0"/>
-        <activity android:name=".LvL1"/>
-        <activity android:name=".LvL2"/>
-        <activity android:name=".LvL3"/>
-        <activity android:name=".LvL4"/>
+        <activity android:name=".coroutines.Coroutines0"/>
+        <activity android:name=".coroutines.Coroutines1"/>
+        <activity android:name=".coroutines.Coroutines2"/>
+        <activity android:name=".coroutines.Coroutines3"/>
+        <activity android:name=".coroutines.Coroutines4"/>
 
-        <activity android:name=".RxJava"/>
+        <activity android:name=".livedata.LiveData0"/>
+
+        <activity android:name=".flow.Flow0"/>
+
+        <activity android:name=".rxjava.RxJava"/>
 
 
     </application>

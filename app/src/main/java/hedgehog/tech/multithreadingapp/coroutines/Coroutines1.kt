@@ -1,19 +1,20 @@
-package hedgehog.tech.multithreadingapp
+package hedgehog.tech.multithreadingapp.coroutines
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
-import hedgehog.tech.multithreadingapp.databinding.Activity1Binding
+import hedgehog.tech.multithreadingapp.R
+import hedgehog.tech.multithreadingapp.databinding.Coroutines1Binding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
-class LvL1: AppCompatActivity(R.layout.activity_1) {
+class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
 
-    private val viewBinding by viewBinding(Activity1Binding::bind)
+    private val viewBinding by viewBinding(Coroutines1Binding::bind)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

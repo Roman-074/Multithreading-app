@@ -1,16 +1,16 @@
-package hedgehog.tech.multithreadingapp
+package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
-import hedgehog.tech.multithreadingapp.databinding.Activity2Binding
-import hedgehog.tech.multithreadingapp.databinding.Activity3Binding
+import hedgehog.tech.multithreadingapp.R
+import hedgehog.tech.multithreadingapp.databinding.Coroutines3Binding
 import kotlinx.coroutines.*
 
-class LvL3: AppCompatActivity(R.layout.activity_3) {
+class Coroutines3: AppCompatActivity(R.layout.coroutines_3) {
 
-    private val viewBinding by viewBinding(Activity3Binding::bind)
+    private val viewBinding by viewBinding(Coroutines3Binding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package hedgehog.tech.multithreadingapp;
+package hedgehog.tech.multithreadingapp.rxjava;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
