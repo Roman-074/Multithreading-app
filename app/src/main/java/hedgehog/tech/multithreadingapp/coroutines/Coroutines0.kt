@@ -1,6 +1,7 @@
 package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
+import android.system.Os.bind
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
@@ -25,7 +26,6 @@ class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
         println("Click!")
         for (i in 0..7){
             downloadFile(i)
-//            viewBinding.textStatus.text = "Закачано файлов: $i"
             viewBinding.textStatus.text = "Закачано файлов: $i"
         }
     }

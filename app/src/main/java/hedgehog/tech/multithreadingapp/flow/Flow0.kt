@@ -2,6 +2,7 @@ package hedgehog.tech.multithreadingapp.flow
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Flow0Binding
 
