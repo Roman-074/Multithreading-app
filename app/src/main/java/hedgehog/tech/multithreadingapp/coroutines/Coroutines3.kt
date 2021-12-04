@@ -1,71 +1,91 @@
 package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines3Binding
 import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
 
-class Coroutines3: AppCompatActivity(R.layout.coroutines_3) {
+class Coroutines3: AppCompatActivity(R.layout.coroutines_3), CoroutineScope {
 
     private val viewBinding by viewBinding(Coroutines3Binding::bind)
 
+    // переменная, связанная с жизненным циклом активити
+    lateinit var job: Job
+    // делаем сочетание основного контекста с контекстом задания
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+    // по аналогии
+    private val ioContext: CoroutineContext
+        get() = Dispatchers.IO + job
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewBinding.buttonJoin.setOnClickListener {
-            runBlocking {
-                initJob().join()
-                Log.d("my", "Main block >>>")
-                viewBinding.textStatus.text = "Main block >>>"
-            }
-        }
-
+        // привязываем работу данной джобы к жизненному циклу активити
+        job = Job()
         viewBinding.buttonStart.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Main) {
-                initJob().join()
-                Log.d("my", "Background block >>>")
-                viewBinding.textStatus.text = "Background block >>>"
-            }
-        }
-
-
-        viewBinding.buttonCancel.setOnClickListener {
-            val ex = initJob()
-            runBlocking {
-                delay(3000)
-                ex.cancel()
-                Log.d("my", "Cancel >>>")
-                viewBinding.textStatus.text = "Cancel >>>"
-            }
-        }
-
-    }
-
-    private fun initJob(): Job {
-        return GlobalScope.launch(Dispatchers.IO) {
-            repeat(5) {
-                Log.d("my", "tick $it")
-                delay(1000)
-            }
+            launchScope()
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // не забываем отменять работу джобу при завершении работы с активити
+        job.cancel()
+    }
 
-    // runBlocking запускает новую сопрограмму и блокирует текущий поток до его завершения
-    // Эту функцию нельзя использовать из сопрограммы. Она разработана, чтобы связать обычный
-    // блокирующий код с библиотеками, написанными в стиле приостановки
+    // launch Builder запускает новую сопрограмму без блокирования текущего
+    // потока, и возвращает ссылку на сопрограммы вида Job
 
-    // Функция join () - это функция приостановки, то есть ее можно вызвать из сопрограммы
-    // или из другой suspend функции. Она блокирует все потоки до тех пор, пока
-    // сопрограмма, в которой она написана, или контекст не завершит свою работу. Только когда
-    // сопрограмма завершит свою работу, будут выполнены строки после функции join ()
+    // (launch доступен тут потому, что мы унаследовали активити от CoroutineScope)
+    private fun launchScope() = launch(ioContext) {
+        longTask()
+    }
 
-    // cancel () используется для отмены сопрограммы, не дожидаясь ее завершения. Можно сказать,
-    // что это прямо противоположно методу join() в том смысле, что метод join () ожидает, пока
-    // сопрограмма завершит всю свою работу и заблокирует все другие потоки, тогда как метод cancel()
-    // при обнаружении убивает coroutine, т.е. останавливает сопрограмму
+    // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
+    private suspend fun longTask(): String{
+        println("Click!")
+        for (i in 0..7){
+            downloadFile(i)
+            withContext(context = coroutineContext){
+                viewBinding.textStatus.text = "Закачано файлов: $i"
+            }
+        }
+        return "Success!"
+    }
+
+    private fun downloadFile(index: Int){
+        try {
+            TimeUnit.SECONDS.sleep(1)
+            println("Загрузка файла... $index")
+        } catch (ex: Exception){
+            ex.printStackTrace()
+        }
+    }
+
+
+    // async Builder такой же , как launch, с тем исключением , что он возвращает Deferred<T>
+    // Это ключевое различие между async и launch
+
+    // Deferred<T> возвращает конкретное значение типа T после того, как сопрограмма завершает
+    // выполнение, тогда как в Job этого не происходит
+    // еще пример: launch больше похож на построитель сопрограмм типа «запустил и забыл»,
+    // в то время как async возвращает значение после того, как сопрограмма завершила выполнение
+
+//        val deferred: Deferred<String> = async(context = ioContext) {
+//            longTask()
+//        }
+//        // ожидает завершения сопрограммы и возвращает результат
+//        val resultString: String = deferred.await()
+//
+//        Log.d("my", "async fun $resultString ")
+//        // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
+//        withContext(context = coroutineContext){
+//            viewBinding.textStatus.text = "Async fun заверишла работу и вернула значение"
+//        }
+
 
 }

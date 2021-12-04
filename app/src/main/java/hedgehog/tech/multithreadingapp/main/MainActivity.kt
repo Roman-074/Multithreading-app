@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 startActivity(Intent(this@MainActivity, Coroutines1::class.java))
             }
             button2.setOnClickListener {
-                startActivity(Intent(this@MainActivity, Coroutines2::class.java))
-            }
-            button3.setOnClickListener {
                 startActivity(Intent(this@MainActivity, Coroutines3::class.java))
             }
-            button4.setOnClickListener {
+            button3.setOnClickListener {
                 startActivity(Intent(this@MainActivity, Coroutines4::class.java))
+            }
+            button4.setOnClickListener {
+                startActivity(Intent(this@MainActivity, Coroutines5::class.java))
             }
             buttonRx.setOnClickListener {
                 startActivity(Intent(this@MainActivity, RxJava::class.java))

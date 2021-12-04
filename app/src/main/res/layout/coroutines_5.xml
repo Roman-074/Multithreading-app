@@ -17,7 +17,7 @@
         android:textColor="#1EBC90"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_start"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_job"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,17 +26,35 @@
         android:id="@+id/progressBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_start"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_status" />
 
     <Button
-        android:id="@+id/button_start"
+        android:id="@+id/button_start_job"
         style="@style/button_style"
-        android:text="START job"
+        android:text="start job"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        style="@style/button_style"
+        android:text="cancel"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button_timeout"
+        style="@style/button_style"
+        android:layout_marginBottom="16dp"
+        android:text="timeout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_start_job" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

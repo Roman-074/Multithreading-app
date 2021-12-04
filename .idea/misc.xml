@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/coroutines_0.xml" value="0.17426545086119555" />
+        <entry key="app/src/main/res/layout/coroutines_1.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/coroutines_2.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/flow0.xml" value="0.3572916666666667" />
         <entry key="app/src/main/res/layout/flow_0.xml" value="0.18115942028985507" />
         <entry key="app/src/main/res/layout/livedata_0.xml" value="0.3572916666666667" />

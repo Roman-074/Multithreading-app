@@ -1,7 +1,6 @@
 package hedgehog.tech.multithreadingapp.coroutines
 
 import android.os.Bundle
-import android.system.Os.bind
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
@@ -14,12 +13,9 @@ class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewBinding.buttonStart.setOnClickListener {
-            // тут приложение виснет на долгой задаче (тестить лучше на API = 24 и ниже)
             longTask()
         }
-
     }
 
     private fun longTask(){
@@ -32,7 +28,7 @@ class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
 
     private fun downloadFile(index: Int){
         try {
-            TimeUnit.SECONDS.sleep(1)
+            TimeUnit.MILLISECONDS.sleep(1000)
             println("Загрузка файла... $index")
         } catch (ex: Exception){
             ex.printStackTrace()

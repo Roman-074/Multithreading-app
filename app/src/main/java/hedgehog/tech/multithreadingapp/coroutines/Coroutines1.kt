@@ -1,62 +1,95 @@
 package hedgehog.tech.multithreadingapp.coroutines
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines1Binding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
+
+/**
+         1 Виды билдеров
+         2 Контекст корутины
+         3 Suspend фнукции
+ */
+
 
 class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
 
     private val viewBinding by viewBinding(Coroutines1Binding::bind)
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewBinding.buttonStart.setOnClickListener {
-            // при каждом клике создается отдельная корутина, которая работает изолированно от другой
-            newLaunch()
-        }
-
-        // тут создается сразу две корутины, которые работают параллельно
-        viewBinding.buttonDouble.setOnClickListener {
-            newLaunch()
-            newLaunch()
-        }
-
+        viewBinding.buttonLaunch.setOnClickListener { launchBuilder() }
+        viewBinding.buttonAsync.setOnClickListener { asyncBuilder() }
+        viewBinding.buttonRunblocking.setOnClickListener { runBlockingBuilder() }
     }
 
-    private fun newLaunch(){
-        // внутри корутины операции привязаны к разным потокам, указанным в диспетчерах
-        // для программиста код выглядит последовательным - пока не завершится выполнение
-        // инструкции, следующая не запускается
-        GlobalScope.launch {
-            for (i in 0..7){
-                withContext(Dispatchers.IO){
-                    downloadFile(i)
-                }
-                withContext(Dispatchers.Main){
-                    viewBinding.textStatus.text = "Закачано файлов: $i"
-                }
-            }
-            viewBinding.textStatus.text = "Success!"
+
+
+    // launch больше похож на построитель сопрограмм типа «запустил и забыл»
+    // Запускает новую сопрограмму без блокирования текущего потока, и возвращает ссылку
+    // на сопрограмму вида Job
+    private fun launchBuilder(){
+        CoroutineScope(Dispatchers.IO).launch {
+            longTask()
         }
+    }
+
+    // async такой же как launch с тем исключением, что он возвращает Deferred<T>
+    // Это ключевое различие между async и launch
+    // Deferred<T> возвращает конкретное значение типа T после того, как сопрограмма завершает
+    // выполнение, тогда как в Job этого не происходит
+    private fun asyncBuilder(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val deferred: Deferred<String> = async {
+                longTask()
+            }
+            // ожидает завершения сопрограммы и возвращает результат
+            val resultString: String = deferred.await()
+
+            Log.d("my", "async fun $resultString ")
+            // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
+            withContext(Dispatchers.Main){
+                viewBinding.textStatus.text = "Скачивание завершено"
+            }
+        }
+    }
+
+    // runBlocking запускает новую сопрограмму и блокирует текущий поток до ее завершения
+    // Эту функцию нельзя использовать из сопрограммы. Она разработана, чтобы связать обычный
+    // блокирующий код с библиотеками, написанными в стиле приостановки
+    private fun runBlockingBuilder(){
+        viewBinding.textStatus.text = "Старт блокировки"
+        runBlocking {
+            longTask()
+        }
+    }
+
+
+    // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
+    private suspend fun longTask(): String{
+        println("Click!")
+        for (i in 0..7){
+            downloadFile(i)
+            withContext(Dispatchers.Main){
+                viewBinding.textStatus.text = "Закачано файлов: $i"
+            }
+        }
+        return "Success!"
     }
 
     private fun downloadFile(index: Int){
         try {
-            TimeUnit.SECONDS.sleep(1)
+            TimeUnit.MILLISECONDS.sleep(300)
             println("Загрузка файла... $index")
         } catch (ex: Exception){
             ex.printStackTrace()
         }
     }
+
+
 
 }

@@ -25,9 +25,12 @@
 
         <activity android:name=".coroutines.Coroutines0"/>
         <activity android:name=".coroutines.Coroutines1"/>
-        <activity android:name=".coroutines.Coroutines2"/>
+
+
+        <activity android:name=".coroutines.Coroutines7"/>
         <activity android:name=".coroutines.Coroutines3"/>
         <activity android:name=".coroutines.Coroutines4"/>
+        <activity android:name=".coroutines.Coroutines5"/>
 
         <activity android:name=".livedata.LiveData0"/>
 

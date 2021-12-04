@@ -11,52 +11,61 @@ import kotlinx.coroutines.*
 class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
 
     private val viewBinding by viewBinding(Coroutines4Binding::bind)
-    lateinit var ex: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewBinding.buttonStartJob.setOnClickListener {
-            ex = initJob()
+        viewBinding.buttonJoin.setOnClickListener {
+            runBlocking {
+                initJob().join()
+                Log.d("my", "Main block >>>")
+                viewBinding.textStatus.text = "Main block >>>"
+            }
         }
 
+        viewBinding.buttonStart.setOnClickListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                initJob().join()
+                Log.d("my", "Background block >>>")
+                viewBinding.textStatus.text = "Background block >>>"
+            }
+        }
+
+
         viewBinding.buttonCancel.setOnClickListener {
+            val ex = initJob()
             runBlocking {
-//                delay(2000)
+                delay(3000)
                 ex.cancel()
                 Log.d("my", "Cancel >>>")
                 viewBinding.textStatus.text = "Cancel >>>"
             }
         }
 
-        viewBinding.buttonTimeout.setOnClickListener {
-            initJobTimeout()
-        }
-
-
     }
 
     private fun initJob(): Job {
         return GlobalScope.launch(Dispatchers.IO) {
-            repeat(10000) {
-                if (isActive) Log.d("my", "tick $it")
-                else Log.d("my", "Finish!")
+            repeat(5) {
+                Log.d("my", "tick $it")
+                delay(1000)
             }
         }
     }
 
-    private fun initJobTimeout(): Job {
-        return GlobalScope.launch(Dispatchers.IO) {
-            withTimeout(1000){
-                repeat(1000000) {
-                    if (isActive) Log.d("my", "tick $it")
-                    else Log.d("my", "Finish!")
-                }
-                Log.d("my", "End timeout >>>>>>")
-            }
 
-        }
-    }
+    // runBlocking запускает новую сопрограмму и блокирует текущий поток до его завершения
+    // Эту функцию нельзя использовать из сопрограммы. Она разработана, чтобы связать обычный
+    // блокирующий код с библиотеками, написанными в стиле приостановки
 
+    // Функция join () - это функция приостановки, то есть ее можно вызвать из сопрограммы
+    // или из другой suspend функции. Она блокирует все потоки до тех пор, пока
+    // сопрограмма, в которой она написана, или контекст не завершит свою работу. Только когда
+    // сопрограмма завершит свою работу, будут выполнены строки после функции join ()
+
+    // cancel () используется для отмены сопрограммы, не дожидаясь ее завершения. Можно сказать,
+    // что это прямо противоположно методу join() в том смысле, что метод join () ожидает, пока
+    // сопрограмма завершит всю свою работу и заблокирует все другие потоки, тогда как метод cancel()
+    // при обнаружении убивает coroutine, т.е. останавливает сопрограмму
 
 }
