@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines1Binding
+import hedgehog.tech.multithreadingapp.main.AnimationUtils
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
@@ -25,6 +26,7 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
         viewBinding.buttonLaunch.setOnClickListener { launchBuilder() }
         viewBinding.buttonAsync.setOnClickListener { asyncBuilder() }
         viewBinding.buttonRunblocking.setOnClickListener { runBlockingBuilder() }
+        AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
     }
 
 
@@ -42,6 +44,7 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
     // Это ключевое различие между async и launch
     // Deferred<T> возвращает конкретное значение типа T после того, как сопрограмма завершает
     // выполнение, тогда как в Job этого не происходит
+    // запустить async можно только изнутри другой корутины
     private fun asyncBuilder(){
         CoroutineScope(Dispatchers.IO).launch {
             val deferred: Deferred<String> = async {
@@ -51,7 +54,7 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
             val resultString: String = deferred.await()
 
             Log.d("my", "async fun $resultString ")
-            // работа со view как мы помним доступна только из main потока. Нужно обязательно переключать контекст
+            // работа со view как мы помним доступна только из main потока. Нужно переключить диспетчер
             withContext(Dispatchers.Main){
                 viewBinding.textStatus.text = "Скачивание завершено"
             }
@@ -70,6 +73,8 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
 
 
     // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
+    // suspend функции можно запускать только изнутри корутин
+    // !!! suspend функция не блокирует поток, а всего лишь приостанавливает сопрограмму
     private suspend fun longTask(): String{
         println("Click!")
         for (i in 0..7){

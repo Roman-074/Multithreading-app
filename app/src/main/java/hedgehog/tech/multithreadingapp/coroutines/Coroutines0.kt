@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines0Binding
+import hedgehog.tech.multithreadingapp.main.AnimationUtils
 import java.util.concurrent.TimeUnit
 
 class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
@@ -16,6 +17,8 @@ class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
         viewBinding.buttonStart.setOnClickListener {
             longTask()
         }
+
+        AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
     }
 
     private fun longTask(){
