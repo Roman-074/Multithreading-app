@@ -35,6 +35,7 @@
         <activity android:name=".livedata.LiveData0"/>
 
         <activity android:name=".flow.Flow0"/>
+        <activity android:name=".flow.Flow1"/>
 
         <activity android:name=".rxjava.RxJava"/>
 

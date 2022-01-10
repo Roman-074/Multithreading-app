@@ -74,6 +74,9 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
 
     // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
     // suspend функции можно запускать только изнутри корутин
+    // suspend - приостанавливает выполнение текущей сопрограммы, сохраняя все локальные переменные.
+    // Текущий поток может продолжить свою работу, в то время как код приостановки
+    // выполняется в другом потоке
     // !!! suspend функция не блокирует поток, а всего лишь приостанавливает сопрограмму
     private suspend fun longTask(): String{
         println("Click!")
@@ -94,7 +97,6 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
             ex.printStackTrace()
         }
     }
-
 
 
 }

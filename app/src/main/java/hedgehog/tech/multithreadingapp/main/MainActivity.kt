@@ -8,6 +8,7 @@ import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.rxjava.RxJava
 import hedgehog.tech.multithreadingapp.coroutines.*
 import hedgehog.tech.multithreadingapp.databinding.ActivityMainBinding
+import hedgehog.tech.multithreadingapp.flow.Flow0
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             button4.setOnClickListener {
                 startActivity(Intent(this@MainActivity, Coroutines5::class.java))
+            }
+            buttonFlow0.setOnClickListener {
+                startActivity(Intent(this@MainActivity, Flow0::class.java))
             }
             buttonRx.setOnClickListener {
                 startActivity(Intent(this@MainActivity, RxJava::class.java))
