@@ -10,6 +10,11 @@ import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
+/**
+ - Контекст корутины
+ - Виды диспетчеров
+ */
+
 class Coroutines3 :
     AppCompatActivity(R.layout.coroutines_3),
     CoroutineScope {

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#414A56"
-    >
+    android:background="#414A56">
 
     <TextView
         android:id="@+id/textView"
@@ -25,53 +23,50 @@
         android:id="@+id/text_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="STATUS"
         android:textColor="#1EBC90"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:adjustViewBounds="true"
-        app:lottie_loop="true"
-        app:lottie_speed="1"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_status"
-        />
 
+        app:layout_constraintTop_toBottomOf="@+id/text_status"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
 
     <Button
-        android:id="@+id/button_launch"
+        android:id="@+id/button_async"
         style="@style/button_style"
-        android:text="Launch"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:text="async"
+        app:layout_constraintBottom_toTopOf="@+id/button_runblocking"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button_runblocking"
         style="@style/button_style"
+        android:layout_marginBottom="8dp"
         android:text="runblocking"
         app:layout_constraintBottom_toTopOf="@+id/button_launch"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button_async"
+        android:id="@+id/button_launch"
         style="@style/button_style"
-        android:text="async"
-        app:layout_constraintBottom_toTopOf="@+id/button_runblocking"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:layout_marginBottom="16dp"
+        android:text="Launch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,9 +11,9 @@ import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
 /**
- 1 Виды билдеров
- 2 Виды диспетчеров
- 3 Suspend фнукции
+ - Виды билдеров
+ - Переключение контекста
+ - Suspend фнукции
  */
 
 class Coroutines1 : AppCompatActivity(R.layout.coroutines_1) {
