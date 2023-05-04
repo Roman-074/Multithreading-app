@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines5Binding
+import hedgehog.tech.multithreadingapp.main.AnimationUtils
 import kotlinx.coroutines.*
 
 class Coroutines5 : AppCompatActivity(R.layout.coroutines_5) {
@@ -15,6 +16,7 @@ class Coroutines5 : AppCompatActivity(R.layout.coroutines_5) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
 
         viewBinding.buttonStartJob.setOnClickListener {
             ex = initJob()
@@ -22,9 +24,7 @@ class Coroutines5 : AppCompatActivity(R.layout.coroutines_5) {
 
         viewBinding.buttonCancel.setOnClickListener {
             runBlocking {
-//                delay(2000)
                 ex.cancel()
-                Log.d("my", "Cancel >>>")
                 viewBinding.textStatus.text = "Cancel >>>"
             }
         }

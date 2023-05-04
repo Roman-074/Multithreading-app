@@ -61,9 +61,6 @@ class Coroutines1 : AppCompatActivity(R.layout.coroutines_1) {
                 viewBinding.textStatus.text = "Скачивание завершено"
             }
         }
-//        GlobalScope.launch {
-//            longTask()
-//        }
     }
 
     // runBlocking запускает новую сопрограмму и блокирует текущий поток до ее завершения
@@ -83,9 +80,6 @@ class Coroutines1 : AppCompatActivity(R.layout.coroutines_1) {
     // выполняется в другом потоке
     // !!! suspend функция не блокирует поток, а всего лишь приостанавливает сопрограмму
     private suspend fun longTask(): String {
-//        val a = CoroutineScope(Dispatchers.IO).async {
-//            longTask()
-//        }.await()
         println("Click!")
         for (i in 0..7) {
             downloadFile(i)

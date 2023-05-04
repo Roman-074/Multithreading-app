@@ -59,12 +59,19 @@ class Coroutines3 :
         }
     }
 
+    private fun singleScope() = launch(newSingleThreadContext(name = "scope_1")) {
+        longTask()
+        withContext(coroutineContext) {
+            viewBinding.textStatus.text = "Загрузка завершена"
+        }
+    }
+
     // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
     private suspend fun longTask(): String {
         println("Click!")
         for (i in 0..7) {
             downloadFile(i)
-            withContext(context = coroutineContext) {
+            withContext(coroutineContext) {
                 viewBinding.textStatus.text = "Закачано файлов: $i"
             }
         }
