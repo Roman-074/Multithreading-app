@@ -8,7 +8,7 @@ import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines5Binding
 import kotlinx.coroutines.*
 
-class Coroutines5: AppCompatActivity(R.layout.coroutines_5) {
+class Coroutines5 : AppCompatActivity(R.layout.coroutines_5) {
 
     private val viewBinding by viewBinding(Coroutines5Binding::bind)
     lateinit var ex: Job
@@ -32,31 +32,32 @@ class Coroutines5: AppCompatActivity(R.layout.coroutines_5) {
         viewBinding.buttonTimeout.setOnClickListener {
             initJobTimeout()
         }
-
-
     }
 
     private fun initJob(): Job {
         return GlobalScope.launch(Dispatchers.IO) {
             repeat(10000) {
-                if (isActive) Log.d("my", "tick $it")
-                else Log.d("my", "Finish!")
+                if (isActive) {
+                    Log.d("my", "tick $it")
+                } else {
+                    Log.d("my", "Finish!")
+                }
             }
         }
     }
 
     private fun initJobTimeout(): Job {
         return GlobalScope.launch(Dispatchers.IO) {
-            withTimeout(1000){
+            withTimeout(1000) {
                 repeat(1000000) {
-                    if (isActive) Log.d("my", "tick $it")
-                    else Log.d("my", "Finish!")
+                    if (isActive) {
+                        Log.d("my", "tick $it")
+                    } else {
+                        Log.d("my", "Finish!")
+                    }
                 }
                 Log.d("my", "End timeout >>>>>>")
             }
-
         }
     }
-
-
 }

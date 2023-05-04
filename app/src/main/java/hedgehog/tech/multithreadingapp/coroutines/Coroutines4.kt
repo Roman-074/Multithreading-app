@@ -8,7 +8,7 @@ import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines4Binding
 import kotlinx.coroutines.*
 
-class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
+class Coroutines4 : AppCompatActivity(R.layout.coroutines_4) {
 
     private val viewBinding by viewBinding(Coroutines4Binding::bind)
 
@@ -31,7 +31,6 @@ class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
             }
         }
 
-
         viewBinding.buttonCancel.setOnClickListener {
             val ex = initJob()
             runBlocking {
@@ -41,7 +40,6 @@ class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
                 viewBinding.textStatus.text = "Cancel >>>"
             }
         }
-
     }
 
     private fun initJob(): Job {
@@ -52,7 +50,6 @@ class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
             }
         }
     }
-
 
     // runBlocking запускает новую сопрограмму и блокирует текущий поток до его завершения
     // Эту функцию нельзя использовать из сопрограммы. Она разработана, чтобы связать обычный
@@ -67,5 +64,4 @@ class Coroutines4: AppCompatActivity(R.layout.coroutines_4) {
     // что это прямо противоположно методу join() в том смысле, что метод join () ожидает, пока
     // сопрограмма завершит всю свою работу и заблокирует все другие потоки, тогда как метод cancel()
     // при обнаружении убивает coroutine, т.е. останавливает сопрограмму
-
 }

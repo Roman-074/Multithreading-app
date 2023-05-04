@@ -11,13 +11,12 @@ import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
 /**
-         1 Виды билдеров
-         2 Контекст корутины
-         3 Suspend фнукции
+ 1 Виды билдеров
+ 2 Контекст корутины
+ 3 Suspend фнукции
  */
 
-
-class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
+class Coroutines1 : AppCompatActivity(R.layout.coroutines_1) {
 
     private val viewBinding by viewBinding(Coroutines1Binding::bind)
 
@@ -29,14 +28,15 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
         AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
     }
 
-
-
     // launch больше похож на построитель сопрограмм типа «запустил и забыл»
     // Запускает новую сопрограмму без блокирования текущего потока, и возвращает ссылку
     // на сопрограмму вида Job
-    private fun launchBuilder(){
+    private fun launchBuilder() {
         CoroutineScope(Dispatchers.IO).launch {
             longTask()
+            withContext(Dispatchers.Main) {
+                viewBinding.textStatus.text = "Скачивание завершено"
+            }
         }
     }
 
@@ -45,7 +45,9 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
     // Deferred<T> возвращает конкретное значение типа T после того, как сопрограмма завершает
     // выполнение, тогда как в Job этого не происходит
     // запустить async можно только изнутри другой корутины
-    private fun asyncBuilder(){
+    // еще пример: launch больше похож на построитель сопрограмм типа «запустил и забыл»,
+    // в то время как async возвращает значение после того, как сопрограмма завершила выполнение
+    private fun asyncBuilder() {
         CoroutineScope(Dispatchers.IO).launch {
             val deferred: Deferred<String> = async {
                 longTask()
@@ -55,7 +57,7 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
 
             Log.d("my", "async fun $resultString ")
             // работа со view как мы помним доступна только из main потока. Нужно переключить диспетчер
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 viewBinding.textStatus.text = "Скачивание завершено"
             }
         }
@@ -64,13 +66,12 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
     // runBlocking запускает новую сопрограмму и блокирует текущий поток до ее завершения
     // Эту функцию нельзя использовать из сопрограммы. Она разработана, чтобы связать обычный
     // блокирующий код с библиотеками, написанными в стиле приостановки
-    private fun runBlockingBuilder(){
+    private fun runBlockingBuilder() {
         viewBinding.textStatus.text = "Старт блокировки"
         runBlocking {
             longTask()
         }
     }
-
 
     // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
     // suspend функции можно запускать только изнутри корутин
@@ -78,25 +79,23 @@ class Coroutines1: AppCompatActivity(R.layout.coroutines_1) {
     // Текущий поток может продолжить свою работу, в то время как код приостановки
     // выполняется в другом потоке
     // !!! suspend функция не блокирует поток, а всего лишь приостанавливает сопрограмму
-    private suspend fun longTask(): String{
+    private suspend fun longTask(): String {
         println("Click!")
-        for (i in 0..7){
+        for (i in 0..7) {
             downloadFile(i)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 viewBinding.textStatus.text = "Закачано файлов: $i"
             }
         }
         return "Success!"
     }
 
-    private fun downloadFile(index: Int){
+    private fun downloadFile(index: Int) {
         try {
             TimeUnit.MILLISECONDS.sleep(300)
             println("Загрузка файла... $index")
-        } catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }
-
-
 }

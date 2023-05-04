@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
-class Coroutines7: AppCompatActivity(R.layout.coroutines_7) {
+class Coroutines7 : AppCompatActivity(R.layout.coroutines_7) {
 
     private val viewBinding by viewBinding(Coroutines7Binding::bind)
 
@@ -23,16 +23,16 @@ class Coroutines7: AppCompatActivity(R.layout.coroutines_7) {
         }
     }
 
-    private fun newLaunch(){
+    private fun newLaunch() {
         // внутри корутины операции привязаны к разным потокам, указанным в диспетчерах
         // для программиста код выглядит последовательным - пока не завершится выполнение
         // инструкции, следующая не запускается
         GlobalScope.launch {
-            for (i in 0..7){
-                withContext(Dispatchers.IO){
+            for (i in 0..7) {
+                withContext(Dispatchers.IO) {
                     downloadFile(i)
                 }
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     viewBinding.textStatus.text = "Закачано файлов: $i"
                 }
             }
@@ -40,13 +40,12 @@ class Coroutines7: AppCompatActivity(R.layout.coroutines_7) {
         }
     }
 
-    private fun downloadFile(index: Int){
+    private fun downloadFile(index: Int) {
         try {
             TimeUnit.SECONDS.sleep(1)
             println("Загрузка файла... $index")
-        } catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }
-
 }

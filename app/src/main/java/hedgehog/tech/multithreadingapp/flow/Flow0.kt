@@ -13,7 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class Flow0 : AppCompatActivity(R.layout.flow_0){
+class Flow0 : AppCompatActivity(R.layout.flow_0) {
 
     private val viewBinding by viewBinding(Flow0Binding::bind)
 
@@ -24,15 +24,11 @@ class Flow0 : AppCompatActivity(R.layout.flow_0){
         viewBinding.buttonStart.setOnClickListener {
             collectFlow()
         }
-
     }
 
-
-    // Flow являются холодными источниками данных, что означает, что код внутри построителя flow
-    // не выполняется до тех пор, пока к потоку не будет применен оператор
-    // терминала (появится подписчик/наблюдатель)
+    // Flow являются холодными источниками данных
     // Наиболее распространенным терминальным оператором является collect
-    private fun collectFlow(){
+    private fun collectFlow() {
         CoroutineScope(Dispatchers.IO).launch {
             numbersFlow().collect { value ->
                 Log.d("my", "collectFlow: $value")
@@ -42,9 +38,6 @@ class Flow0 : AppCompatActivity(R.layout.flow_0){
     // !!! Важно помнить, что все операторы терминала приостанавливают функции и поэтому
     // должны вызываться из сопрограммы. Также все эти операторы приостанавливают
     // сопрограмму до тех пор, пока поток не будет полностью собран
-
-
-
 
     // Стандартная библиотека предоставляет несколько способов создания потока,
     // самый простой способ — использовать оператор потока
@@ -58,15 +51,12 @@ class Flow0 : AppCompatActivity(R.layout.flow_0){
         }
     } // сама функция numberFlow() не приостанавливается
 
-
     // Существуют и другие способы создания Flow, включая функцию flowOf() и расширение asFlow() ,
     // которое можно использовать для коллекций, последовательностей,
     // диапазонов, значений или функциональных типов:
-    private fun createOtherFlow(){
+    private fun createOtherFlow() {
         flowOf(1, 2, 3)
         listOf("A", "B", "C").asFlow()
         (1..3).asFlow()
     }
-
-
 }

@@ -12,7 +12,5 @@ class LiveData0 : AppCompatActivity(R.layout.livedata_0) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
 }

@@ -9,8 +9,8 @@ import javax.net.ssl.HttpsURLConnection
 
 object RequestHandler {
 
-    const val GET : String = "GET"
-    const val POST : String = "POST"
+    const val GET: String = "GET"
+    const val POST: String = "POST"
 
     @Throws(IOException::class)
     fun requestPOST(r_url: String?, postDataParams: JSONObject): String? {
@@ -59,7 +59,6 @@ object RequestHandler {
             }
             `in`.close()
             response.toString()
-
         } else {
             ""
         }
@@ -80,5 +79,4 @@ object RequestHandler {
         }
         return result.toString()
     }
-
 }

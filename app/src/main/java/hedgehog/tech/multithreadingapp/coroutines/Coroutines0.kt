@@ -21,21 +21,20 @@ class Coroutines0 : AppCompatActivity(R.layout.coroutines_0) {
         AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
     }
 
-    private fun longTask(){
+    private fun longTask() {
         println("Click!")
-        for (i in 0..7){
+        for (i in 0..7) {
             downloadFile(i)
             viewBinding.textStatus.text = "Закачано файлов: $i"
         }
     }
 
-    private fun downloadFile(index: Int){
+    private fun downloadFile(index: Int) {
         try {
             TimeUnit.MILLISECONDS.sleep(1000)
             println("Загрузка файла... $index")
-        } catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
     }
-
 }

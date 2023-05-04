@@ -12,17 +12,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class Flow1 : AppCompatActivity(R.layout.flow_0){
+class Flow1 : AppCompatActivity(R.layout.flow_0) {
 
     private val viewBinding by viewBinding(Flow0Binding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         numbersFlow()
     }
-
 
     // Стандартная библиотека предоставляет несколько способов создания потока,
     // самый простой способ — использовать оператор потока
@@ -35,29 +33,23 @@ class Flow1 : AppCompatActivity(R.layout.flow_0){
         }
     } // сама функция numberFlow() не приостанавливается
 
-
     // Существуют и другие способы создания Flow, включая функцию flowOf() и расширение asFlow() ,
     // которое можно использовать для коллекций, последовательностей,
     // диапазонов, значений или функциональных типов:
-    private fun createOtherFlow(){
+    private fun createOtherFlow() {
         flowOf(1, 2, 3)
         listOf("A", "B", "C").asFlow()
         (1..3).asFlow()
     }
 
-
-
     // Потоки являются холодными, что означает, что код внутри построителя потоков
     // не выполняется до тех пор, пока к потоку не будет применен оператор терминала.
     // Наиболее распространенным терминальным оператором является collect
-    private fun collectFlow(){
+    private fun collectFlow() {
         CoroutineScope(Dispatchers.IO).launch {
             numbersFlow().collect { value ->
                 Log.d("my", "collectFlow: $value")
             }
         }
     }
-
-
-
 }

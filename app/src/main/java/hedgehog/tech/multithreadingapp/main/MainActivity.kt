@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
-import hedgehog.tech.multithreadingapp.rxjava.RxJava
 import hedgehog.tech.multithreadingapp.coroutines.*
 import hedgehog.tech.multithreadingapp.databinding.ActivityMainBinding
 import hedgehog.tech.multithreadingapp.flow.Flow0
+import hedgehog.tech.multithreadingapp.rxjava.RxJava
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -40,8 +40,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 startActivity(Intent(this@MainActivity, RxJava::class.java))
             }
         }
-
-
     }
-
 }
