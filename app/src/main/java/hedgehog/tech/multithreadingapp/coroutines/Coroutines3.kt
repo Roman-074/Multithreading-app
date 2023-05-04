@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import hedgehog.tech.multithreadingapp.R
 import hedgehog.tech.multithreadingapp.databinding.Coroutines3Binding
+import hedgehog.tech.multithreadingapp.main.AnimationUtils
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
@@ -33,6 +34,7 @@ class Coroutines3 :
         viewBinding.buttonStart.setOnClickListener {
             launchScope()
         }
+        AnimationUtils.setupAnimation(viewBinding.lottieAnimation)
     }
 
     override fun onDestroy() {
@@ -47,6 +49,9 @@ class Coroutines3 :
     // (launch доступен тут потому, что мы унаследовали активити от CoroutineScope)
     private fun launchScope() = launch(ioContext) {
         longTask()
+        withContext(coroutineContext) {
+            viewBinding.textStatus.text = "Загрузка завершена"
+        }
     }
 
     // чтобы переключать контекст потоков внутри функции, нужно пометить ее как suspend
@@ -63,7 +68,7 @@ class Coroutines3 :
 
     private fun downloadFile(index: Int) {
         try {
-            TimeUnit.SECONDS.sleep(1)
+            TimeUnit.MILLISECONDS.sleep(300)
             println("Загрузка файла... $index")
         } catch (ex: Exception) {
             ex.printStackTrace()

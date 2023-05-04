@@ -2,7 +2,6 @@ package hedgehog.tech.multithreadingapp.rxjava;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,13 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.concurrent.TimeUnit;
 
 import hedgehog.tech.multithreadingapp.databinding.ActivityRxBinding;
+import hedgehog.tech.multithreadingapp.main.AnimationUtils;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class RxJava extends AppCompatActivity {
 
-    private ActivityRxBinding binding;
+    private static ActivityRxBinding binding;
 
     @SuppressLint("CheckResult")
     @Override
@@ -35,17 +35,17 @@ public class RxJava extends AppCompatActivity {
                         binding.textStatus.setText("Ошибка");
                     });
         });
+
+        AnimationUtils.INSTANCE.setupAnimation(binding.lottieAnimation);
     }
 
 
-    private static Single<String> downloadLogo(){
-        return Single.create( s -> {
-
-            for (int i=0; i< 7; i++){
-                TimeUnit.SECONDS.sleep(1);
-                Log.d("my", "Загрузка файла... " + i);
+    private static Single<String> downloadLogo() {
+        return Single.create(s -> {
+            for (int i = 0; i < 7; i++) {
+                TimeUnit.MILLISECONDS.sleep(300);
+                binding.textStatus.setText("Загрузка файла... " + i);
             }
-
             s.onSuccess("Success");
         });
     }
